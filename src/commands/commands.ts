@@ -5,6 +5,7 @@ import {commandEcho} from "./command_echo.js";
 import {commandBadInput} from "./command_bad_input.js";
 import {commandMap} from "./command_map.js";
 import {commandMapB} from "./command_map.js";
+import {commandExplore} from "./command_explore.js";
 
 export function getCommands(): Record<string, CLICommand> {
     return {
@@ -37,6 +38,11 @@ export function getCommands(): Record<string, CLICommand> {
             name: "mapb",
             description: "Prints the previous page of locations.",
             callback: commandMapB,
+        },
+        explore: {
+            name: "explore",
+            description: "Prints pokemon available in a given location",
+            callback: commandExplore,
         },
     };
 }
