@@ -19,6 +19,7 @@ export async function commandCatch(
         if (attempCatch(result)) {
             state.pokedex[pokemonName] = result;
             console.log(`${result.name} was caught!`);
+            console.log(`You may now inspect it with the inspect command.`);
         } else {
             console.log(`${result.name} escaped!`);
         }
