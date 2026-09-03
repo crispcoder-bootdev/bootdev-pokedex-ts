@@ -1,11 +1,12 @@
 import {cleanInput} from "./clean_input.js";
-import {getCommands} from "./commands.js";
-import {State} from "./state.js";
+import {getCommands} from "../commands/commands.js";
+import {State} from "../state/state.js";
 
-export function startREPL(state: State) {
+export async function startREPL(state: State): Promise<void> {
     const commands = getCommands();
     state.rl.prompt();
-    state.rl.on("line", (line: string) => {
+    // Await completion of body before accepting each line.
+    for await (const line of state.rl) {
         const cleaned = cleanInput(line);
         if (cleaned.length === 0) {
             state.rl.prompt();
@@ -18,10 +19,11 @@ export function startREPL(state: State) {
         }
 
         try {
-            command.callback(state, ...cleaned);
+            await command.callback(state, ...cleaned);
         } catch (err) {
             console.error(err);
         }
         state.rl.prompt();
-    });
+    }
+    return Promise.resolve();
 }
